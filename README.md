@@ -64,6 +64,9 @@ docker run --entrypoint bash -it --gpus all --rm --network=host \
 
 > Docker가 설치되어 있지 않을 경우 사전 설치 단계를 먼저 완료해주세요.
 
+<img width="510" height="593" alt="image" src="https://github.com/user-attachments/assets/7bc2e645-5dbe-4e22-80df-0beaea2b8cfb" />
+
+
 ---
 
 ## Isaac Sim 설치
