@@ -105,7 +105,7 @@ cd ~/isaacsim
 ./isaac-sim.sh
 ./isaac-sim.selector.sh
 
-<img width="1436" height="933" alt="image" src="https://github.com/user-attachments/assets/f1ad1142-fae9-42fc-991c-201cd21cb02d" />
+<img width="1436" height="933" alt="image" src="https://github.com/user-attachments/assets/f4928e4f-a873-4376-9cd6-b99457966c66" />
 
 ```
 
