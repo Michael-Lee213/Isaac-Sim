@@ -11,7 +11,8 @@
 <br>
 
 2. isaac sim 설치 전 system 요구사항
-   ![스크린샷 2026-02-23 10-08-30.png](attachment:d8106d27-e58f-48e4-9ca8-c6cebabd4477:스크린샷_2026-02-23_10-08-30.png)
+
+<img width="704" height="766" alt="image" src="https://github.com/user-attachments/assets/276872c4-9298-4325-873d-bc606a02a6b7" />
 
    <br>
    
