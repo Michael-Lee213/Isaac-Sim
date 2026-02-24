@@ -77,6 +77,9 @@ docker run --entrypoint bash -it --gpus all --rm --network=host \
 
 [공식 다운로드 페이지](https://docs.isaacsim.omniverse.nvidia.com/5.1.0/installation/download.html)에서 버전을 선택하여 다운로드합니다.
 
+<img width="812" height="105" alt="image" src="https://github.com/user-attachments/assets/f2055f6c-f54e-4afd-8d92-13228cc5d593" />
+
+
 **2. 압축 해제**
 
 ```bash
