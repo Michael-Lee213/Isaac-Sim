@@ -1,20 +1,21 @@
-# 🤖 Isaac Sim 설치 및 실행 가이드
+# Isaac Sim 설치 및 실행 가이드
 
 NVIDIA Isaac Sim 5.1.0 설치부터 기본 실행까지의 가이드입니다.
 
 ---
 
-## 📋 목차
+## 목차
 
 - [사전 설치](#-사전-설치)
 - [시스템 요구사항 확인](#-시스템-요구사항-확인)
 - [Isaac Sim 설치](#-isaac-sim-설치)
   - [Local 설치](#local-설치)
   - [Docker 설치](#docker-설치)
+- [참고 링크](#-참고-링크)
 
 ---
 
-## 🔧 사전 설치
+## 사전 설치
 
 ### Docker 설치
 
@@ -48,7 +49,7 @@ Ubuntu 버전에 맞는 ROS2를 설치해주세요.
 
 ---
 
-## ✅ 시스템 요구사항 확인
+## 시스템 요구사항 확인
 
 Isaac Sim 설치 전, 아래 명령어로 시스템 호환성을 먼저 확인해주세요.
 
@@ -61,11 +62,11 @@ docker run --entrypoint bash -it --gpus all --rm --network=host \
     nvcr.io/nvidia/isaac-sim:5.1.0 ./isaac-sim.compatibility_check.sh
 ```
 
-> ⚠️ Docker가 설치되어 있지 않을 경우 사전 설치 단계를 먼저 완료해주세요.
+> Docker가 설치되어 있지 않을 경우 사전 설치 단계를 먼저 완료해주세요.
 
 ---
 
-## 🚀 Isaac Sim 설치
+## Isaac Sim 설치
 
 ### Local 설치
 
@@ -100,9 +101,9 @@ cd ~/isaacsim
 ./isaac-sim.selector.sh
 ```
 
-**`isaac-sim.selector.sh` 실행 시 ROS2 Bridge 설정**
+**`./isaac-sim.selector.sh` 실행 시 ROS2 Bridge 설정**
 
-앱 셀렉터 실행 후 아래 설정을 확인하세요.
+앱 셀렉터 실행 후 아래 항목을 설정하세요.
 
 - **ROS Bridge Extension**: `isaacsim.ros2.bridge`
 - **Use Internal ROS2 Libraries**: 설치된 ROS2 버전 선택
@@ -111,7 +112,7 @@ cd ~/isaacsim
 
 ### Docker 설치
 
-> ⚠️ 현재 Docker를 이용한 설치 방법은 작업 중입니다.
+> 현재 Docker를 이용한 설치 방법은 작업 중입니다.
 
 **1. NVIDIA Container Toolkit 설치**
 
@@ -125,14 +126,19 @@ curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dear
 
 # NVIDIA Container Toolkit 설치
 sudo apt-get install -y nvidia-container-toolkit
+sudo systemctl restart docker
+sudo reboot
+```
 
-# Container Runtime 설정
+**2. Container Runtime 설정**
+
+```bash
 sudo nvidia-ctk runtime configure --runtime=docker
 sudo systemctl restart docker
 sudo reboot
 ```
 
-**2. NVIDIA 드라이버 및 설치 확인**
+**3. NVIDIA 드라이버 및 설치 확인**
 
 ```bash
 # NVIDIA GPU 드라이버 확인
@@ -142,7 +148,7 @@ nvidia-smi
 docker run --rm --runtime=nvidia --gpus all ubuntu nvidia-smi
 ```
 
-**3. Isaac Sim 이미지 Pull**
+**4. Isaac Sim 이미지 Pull**
 
 [NGC 컨테이너 페이지](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/isaac-sim)에서 확인 후 Pull합니다.
 
@@ -150,7 +156,7 @@ docker run --rm --runtime=nvidia --gpus all ubuntu nvidia-smi
 docker pull nvcr.io/nvidia/isaac-sim:5.1.0
 ```
 
-**4. 캐시 볼륨 디렉토리 생성**
+**5. 캐시 볼륨 디렉토리 생성**
 
 ```bash
 mkdir -p ~/docker/isaac-sim/cache/main/ov
@@ -164,9 +170,30 @@ mkdir -p ~/docker/isaac-sim/pkg
 sudo chown -R 1234:1234 ~/docker/isaac-sim
 ```
 
-**5. Isaac Sim 컨테이너 실행**
+**6. Isaac Sim 컨테이너 실행**
+
+> 대화형 Bash 세션으로 실행합니다. (root 권한 제거 상태)
+
+아래 명령어는 디스플레이 설정이 없어 **GUI 오류가 발생**합니다.
 
 ```bash
+#  GUI 오류 발생 버전 (참고용)
+docker run --name isaac-sim --entrypoint bash -it --gpus all -e "ACCEPT_EULA=Y" --rm --network=host \
+    -e "PRIVACY_CONSENT=Y" \
+    -v ~/docker/isaac-sim/cache/main:/isaac-sim/.cache:rw \
+    -v ~/docker/isaac-sim/cache/computecache:/isaac-sim/.nv/ComputeCache:rw \
+    -v ~/docker/isaac-sim/logs:/isaac-sim/.nvidia-omniverse/logs:rw \
+    -v ~/docker/isaac-sim/config:/isaac-sim/.nvidia-omniverse/config:rw \
+    -v ~/docker/isaac-sim/data:/isaac-sim/.local/share/ov/data:rw \
+    -v ~/docker/isaac-sim/pkg:/isaac-sim/.local/share/ov/pkg:rw \
+    -u 1234:1234 \
+    nvcr.io/nvidia/isaac-sim:5.1.0
+```
+
+`-e DISPLAY=$DISPLAY` 및 `-v /tmp/.X11-unix:/tmp/.X11-unix` 옵션을 추가한 수정 버전을 사용하세요.
+
+```bash
+# 수정 버전 (GUI 정상 출력)
 docker run --name isaac-sim --entrypoint bash -it --gpus all -e "ACCEPT_EULA=Y" --rm --network=host \
     -e "PRIVACY_CONSENT=Y" \
     -e DISPLAY=$DISPLAY \
@@ -181,9 +208,7 @@ docker run --name isaac-sim --entrypoint bash -it --gpus all -e "ACCEPT_EULA=Y" 
     nvcr.io/nvidia/isaac-sim:5.1.0
 ```
 
-> 💡 `-e DISPLAY=$DISPLAY`와 `-v /tmp/.X11-unix:/tmp/.X11-unix` 옵션은 GUI 윈도우 출력을 위해 필요합니다. 누락 시 디스플레이 오류가 발생합니다.
-
-**6. Isaac Sim 실행 (컨테이너 내부)**
+**7. Isaac Sim 실행 (컨테이너 내부)**
 
 ```bash
 ./runapp.sh
@@ -191,10 +216,12 @@ docker run --name isaac-sim --entrypoint bash -it --gpus all -e "ACCEPT_EULA=Y" 
 
 ---
 
-## 📌 참고 링크
+## 참고 링크
 
 - [Isaac Sim 공식 문서](https://docs.isaacsim.omniverse.nvidia.com/5.1.0/)
 - [NGC Isaac Sim 컨테이너](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/isaac-sim)
 - [Docker 공식 문서](https://docs.docker.com/)
+- [Docker Engine Install (Ubuntu)](https://docs.docker.com/engine/install/ubuntu)
+- [Docker Linux Post-install](https://docs.docker.com/engine/install/linux-postinstall)
 - [ROS2 Humble 설치](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html)
 - [ROS2 Jazzy 설치](https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs.html)
