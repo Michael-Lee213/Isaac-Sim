@@ -104,6 +104,9 @@ cd ~/isaacsim
 # 아래 둘 중 하나를 선택하여 실행
 ./isaac-sim.sh
 ./isaac-sim.selector.sh
+
+<img width="1436" height="933" alt="image" src="https://github.com/user-attachments/assets/f1ad1142-fae9-42fc-991c-201cd21cb02d" />
+
 ```
 
 **`./isaac-sim.selector.sh` 실행 시 ROS2 Bridge 설정**
