@@ -5,7 +5,7 @@
     - [https://docs.docker.com/engine/install/ubuntu](https://docs.docker.com/engine/install/ubuntu)
     - [https://docs.docker.com/engine/install/linux-postinstall](https://docs.docker.com/engine/install/linux-postinstall)
   <br>
-      [ubuntu 22.04/ros설치]<br>
+    ubuntu 22.04 / ros설치<br>
    - ubuntu 22.04: https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html
    - ubuntu 24.04: https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs.html
 <br>
