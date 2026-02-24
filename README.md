@@ -105,9 +105,9 @@ cd ~/isaacsim
 ./isaac-sim.sh
 ./isaac-sim.selector.sh
 
-<img width="1436" height="933" alt="image" src="https://github.com/user-attachments/assets/f4928e4f-a873-4376-9cd6-b99457966c66" />
-
 ```
+<img width="1436" height="933" alt="image" src="https://github.com/user-attachments/assets/d672b83d-aac7-4d9d-9808-91835628d316" />
+
 
 **`./isaac-sim.selector.sh` 실행 시 ROS2 Bridge 설정**
 
